@@ -17,16 +17,17 @@ StartSession=$7
 # fresh workspace dir.
 rm -rf "$Subdir"/workspace/ > /dev/null 2>&1
 mkdir "$Subdir"/workspace/ > /dev/null 2>&1
+FOO="$Subdir"/workspace/bar
 
 # create temp. find_epi_params.m 
 cp -rf "$MEDIR"/res0urces/find_epi_params.m \
 "$Subdir"/workspace/temp.m
 
 # define some Matlab variables;
-echo "addpath(genpath('${MEDIR}'))" | cat - "$Subdir"/workspace/temp.m > temp && mv temp "$Subdir"/workspace/temp.m
-echo Subdir=["'$Subdir'"] | cat - "$Subdir"/workspace/temp.m >> temp && mv temp "$Subdir"/workspace/temp.m # > /dev/null 2>&1 		
-echo FuncName=["'rest'"] | cat - "$Subdir"/workspace/temp.m >> temp && mv temp "$Subdir"/workspace/temp.m # > /dev/null 2>&1 		
-echo StartSession="$StartSession" | cat - "$Subdir"/workspace/temp.m >> temp && mv temp "$Subdir"/workspace/temp.m # > /dev/null 2>&1  		
+echo "addpath(genpath('${MEDIR}'))" | cat - "$Subdir"/workspace/temp.m > $FOO && mv $FOO "$Subdir"/workspace/temp.m
+echo Subdir=["'$Subdir'"] | cat - "$Subdir"/workspace/temp.m >> $FOO && mv $FOO "$Subdir"/workspace/temp.m # > /dev/null 2>&1 		
+echo FuncName=["'rest'"] | cat - "$Subdir"/workspace/temp.m >> $FOO && mv $FOO "$Subdir"/workspace/temp.m # > /dev/null 2>&1 		
+echo StartSession="$StartSession" | cat - "$Subdir"/workspace/temp.m >> $FOO && mv $FOO "$Subdir"/workspace/temp.m # > /dev/null 2>&1  		
 cd "$Subdir"/workspace/ # run script via Matlab 
 matlab -nodesktop -nosplash -r "temp; exit" # > /dev/null 2>&1 
 
@@ -232,12 +233,13 @@ mkdir "$Subdir"/workspace/ > /dev/null 2>&1
 # create temp. make_precise_subcortical_labels.m 
 cp -rf "$MEDIR"/res0urces/make_precise_subcortical_labels.m \
 "$Subdir"/workspace/temp.m
+FOO="$Subdir"/workspace/bar
 
 # define some Matlab variables;
-echo "addpath(genpath('${MEDIR}')); medir='${MEDIR}'" | cat - "$Subdir"/workspace/temp.m > temp && mv temp "$Subdir"/workspace/temp.m
-echo Subdir=["'$Subdir'"] | cat - "$Subdir"/workspace/temp.m >> temp && mv temp "$Subdir"/workspace/temp.m # > /dev/null 2>&1 		
-echo AtlasTemplate=["'$AtlasTemplate'"] | cat - "$Subdir"/workspace/temp.m >> temp && mv temp "$Subdir"/workspace/temp.m # > /dev/null 2>&1 		
-echo SubcorticalLabels=["'$MEDIR/res0urces/FS/SubcorticalLabels.txt'"] | cat - "$Subdir"/workspace/temp.m >> temp && mv temp "$Subdir"/workspace/temp.m # > /dev/null 2>&1 		
+echo "addpath(genpath('${MEDIR}')); medir='${MEDIR}'" | cat - "$Subdir"/workspace/temp.m > $FOO && mv $FOO "$Subdir"/workspace/temp.m
+echo Subdir=["'$Subdir'"] | cat - "$Subdir"/workspace/temp.m >> $FOO && mv $FOO "$Subdir"/workspace/temp.m # > /dev/null 2>&1 		
+echo AtlasTemplate=["'$AtlasTemplate'"] | cat - "$Subdir"/workspace/temp.m >> $FOO && mv $FOO "$Subdir"/workspace/temp.m # > /dev/null 2>&1 		
+echo SubcorticalLabels=["'$MEDIR/res0urces/FS/SubcorticalLabels.txt'"] | cat - "$Subdir"/workspace/temp.m >> $FOO && mv $FOO "$Subdir"/workspace/temp.m # > /dev/null 2>&1 		
 cd "$Subdir"/workspace/ # run script via Matlab 
 matlab -nodesktop -nosplash -r "temp; exit" # > /dev/null 2>&1 
 
@@ -256,10 +258,11 @@ mkdir "$Subdir"/workspace/ > /dev/null 2>&1
 # create temporary CoregQA.m 
 cp -rf "$MEDIR"/res0urces/coreg_qa.m \
 "$Subdir"/workspace/temp.m
+FOO="$Subdir"/workspace/bar
 
 # define some Matlab variables;
-echo "addpath(genpath('${MEDIR}'))" | cat - "$Subdir"/workspace/temp.m > temp && mv temp "$Subdir"/workspace/temp.m
-echo Subdir=["'$Subdir'"] | cat - "$Subdir"/workspace/temp.m >> temp && mv temp "$Subdir"/workspace/temp.m # > /dev/null 2>&1 		
+echo "addpath(genpath('${MEDIR}'))" | cat - "$Subdir"/workspace/temp.m > $FOO && mv $FOO "$Subdir"/workspace/temp.m
+echo Subdir=["'$Subdir'"] | cat - "$Subdir"/workspace/temp.m >> $FOO && mv $FOO "$Subdir"/workspace/temp.m # > /dev/null 2>&1 		
 cd "$Subdir"/workspace/ # run script via Matlab 
 matlab -nodesktop -nosplash -r "temp; exit" # > /dev/null 2>&1
 rm -rf "$Subdir"/workspace/ > /dev/null 2>&1

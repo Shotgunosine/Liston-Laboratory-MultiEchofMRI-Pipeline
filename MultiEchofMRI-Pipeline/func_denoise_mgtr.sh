@@ -28,16 +28,18 @@ for s in $sessions ; do
 		# create temporary mgtr_volume.m 
 		cp -rf "$MEDIR"/res0urces/mgtr_volume.m \
 		"$Subdir"/workspace/temp.m
+        FOO="$Subdir"/workspace/bar
 
 		# define some Matlab variables
-		echo Input=["'$Subdir/func/rest/session_$s/run_$r/Rest_OCME+MEICA.nii.gz'"] | cat - "$Subdir"/workspace/temp.m > temp && mv temp "$Subdir"/workspace/temp.m
-		echo Subdir=["'$Subdir'"]  | cat - "$Subdir"/workspace/temp.m >> temp && mv temp "$Subdir"/workspace/temp.m
-		echo Output_MGTR=["'$Subdir/func/rest/session_$s/run_$r/Rest_OCME+MEICA+MGTR'"] | cat - "$Subdir"/workspace/temp.m >> temp && mv temp "$Subdir"/workspace/temp.m
-		echo Output_Betas=["'$Subdir/func/rest/session_$s/run_$r/Rest_OCME+MEICA+MGTR_Betas'"] | cat - "$Subdir"/workspace/temp.m >> temp && mv temp "$Subdir"/workspace/temp.m
-		echo "addpath(genpath('${MEDIR}'))" | cat - "$Subdir"/workspace/temp.m >> temp && mv temp "$Subdir"/workspace/temp.m
+		echo Input=["'$Subdir/func/rest/session_$s/run_$r/Rest_OCME+MEICA.nii.gz'"] | cat - "$Subdir"/workspace/temp.m > $FOO && mv $FOO "$Subdir"/workspace/temp.m
+		echo MCF=["'$Subdir/func/rest/session_$s/run_$r/MCF.par'"] | cat - "$Subdir"/workspace/temp.m > $FOO && mv $FOO "$Subdir"/workspace/temp.m
+		echo Subdir=["'$Subdir'"]  | cat - "$Subdir"/workspace/temp.m >> $FOO && mv $FOO "$Subdir"/workspace/temp.m
+		echo Output_MGTR=["'$Subdir/func/rest/session_$s/run_$r/Rest_OCME+MEICA+MGTR'"] | cat - "$Subdir"/workspace/temp.m >> $FOO && mv $FOO "$Subdir"/workspace/temp.m
+		echo Output_Betas=["'$Subdir/func/rest/session_$s/run_$r/Rest_OCME+MEICA+MGTR_Betas'"] | cat - "$Subdir"/workspace/temp.m >> $FOO && mv $FOO "$Subdir"/workspace/temp.m
+		echo "addpath(genpath('${MEDIR}'))" | cat - "$Subdir"/workspace/temp.m >> $FOO && mv $FOO "$Subdir"/workspace/temp.m
 
 		cd "$Subdir"/workspace/ # perform mgtr using Matlab
-		matlab -nodesktop -nosplash -r "temp; exit" > /dev/null 2>&1	 
+		matlab -nodesktop -nosplash -r "temp; exit" 
 		rm "$Subdir"/workspace/temp.m # 
 
 	done

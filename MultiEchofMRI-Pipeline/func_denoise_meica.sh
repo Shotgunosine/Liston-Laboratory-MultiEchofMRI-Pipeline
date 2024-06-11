@@ -33,6 +33,11 @@ for s in $sessions ; do
 
 done
 
+# hardcode tedana path 
+# TODO: fix this
+export PATH=/data/MLDSST/nielsond/target_test/other_repos/for_tedana/bin:$PATH
+
+
 # define a list of directories;
 DataDirs=$(cat "$Subdir"/DataDirs.txt) # note: this is used for parallel processing purposes.
 rm "$Subdir"/DataDirs.txt # remove intermediate file;

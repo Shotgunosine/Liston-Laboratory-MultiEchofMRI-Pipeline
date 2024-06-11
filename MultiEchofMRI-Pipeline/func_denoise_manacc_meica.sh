@@ -14,6 +14,7 @@ StartSession=$8
 # fresh workspace dir.
 rm -rf "$Subdir"/workspace/ > /dev/null 2>&1 
 mkdir "$Subdir"/workspace/ > /dev/null 2>&1 
+FOO="$Subdir"/workspace/bar
 
 # count the number of sessions
 sessions=("$Subdir"/func/rest/session_*)
@@ -38,8 +39,8 @@ for s in $sessions ; do
 		"$Subdir"/workspace/temp.m
 
 		# define some Matlab variables
-		echo "addpath(genpath('${MEDIR}'))" | cat - "$Subdir"/workspace/temp.m > temp && mv temp "$Subdir"/workspace/temp.m > /dev/null 2>&1  
-		echo data_dir=["'$Subdir/func/rest/session_$s/run_$r'"] | cat - "$Subdir"/workspace/temp.m >> temp && mv temp "$Subdir"/workspace/temp.m > /dev/null 2>&1  
+		echo "addpath(genpath('${MEDIR}'))" | cat - "$Subdir"/workspace/temp.m > $FOO && mv $FOO "$Subdir"/workspace/temp.m > /dev/null 2>&1  
+		echo data_dir=["'$Subdir/func/rest/session_$s/run_$r'"] | cat - "$Subdir"/workspace/temp.m >> $FOO && mv $FOO "$Subdir"/workspace/temp.m > /dev/null 2>&1  
 	
 		cd "$Subdir"/workspace/ # run script via Matlab 
 		matlab -nodesktop -nosplash -r "temp; exit" > /dev/null 2>&1  

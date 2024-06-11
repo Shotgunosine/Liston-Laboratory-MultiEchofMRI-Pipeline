@@ -16,12 +16,13 @@ mkdir "$Subdir"/workspace/ # > /dev/null 2>&1
 # create a temp. "find_fm_params.m"
 cp -rf "$MEDIR"/res0urces/find_fm_params.m \
 "$Subdir"/workspace/temp.m
+FOO="$Subdir"/workspace/bar
 
 # define some Matlab variables
-echo "addpath(genpath('/data/MLDSST/nielsond/target_test/other_repos/jsonlab')); addpath(genpath('${MEDIR}'));" | cat - "$Subdir"/workspace/temp.m > temp && mv temp "$Subdir"/workspace/temp.m # > /dev/null 2>&1
+echo "addpath(genpath('${MEDIR}'));" | cat - "$Subdir"/workspace/temp.m > $FOO && mv $FOO "$Subdir"/workspace/temp.m # > /dev/null 2>&1
 
-echo Subdir=["'$Subdir'"] | cat - "$Subdir"/workspace/temp.m >> temp && mv temp "$Subdir"/workspace/temp.m # > /dev/null 2>&1  		
-echo StartSession="$StartSession" | cat - "$Subdir"/workspace/temp.m >> temp && mv temp "$Subdir"/workspace/temp.m # > /dev/null 2>&1  		
+echo Subdir=["'$Subdir'"] | cat - "$Subdir"/workspace/temp.m >> $FOO && mv $FOO "$Subdir"/workspace/temp.m # > /dev/null 2>&1  		
+echo StartSession="$StartSession" | cat - "$Subdir"/workspace/temp.m >> $FOO && mv $FOO "$Subdir"/workspace/temp.m # > /dev/null 2>&1  		
 cd "$Subdir"/workspace/ # run script via Matlab 
 matlab -nodesktop -nosplash -r "temp; exit"
 
