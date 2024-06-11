@@ -16,6 +16,44 @@ data = reshape(data,[dims(1)*dims(2)*dims(3),dims(4)]);
 info_4D = niftiinfo(Input); % nii info; used for writing the output.
 data_mean = mean(data,2); % hold onto this for a moment...
 
+% load motion data
+mcf = load(MCF);
+
+% calculate expanded motion variables
+mcfdims = size(mcf);
+mcflen = mcfdims(1);
+derivatives(2:mcflen, :) = mcf(2:mcflen, :) - mcf(1:(mcflen-1), :);
+squares = mcf.^2;
+square_derivatives = derivatives.^2;
+
+rot_x = mcf(:,1);
+rot_y = mcf(:,2);
+rot_z = mcf(:,3);
+trn_x = mcf(:,4);
+trn_y = mcf(:,5);
+trn_z = mcf(:,6);
+
+drot_x = derivatives(:,1);
+drot_y = derivatives(:,2);
+drot_z = derivatives(:,3);
+dtrn_x = derivatives(:,4);
+dtrn_y = derivatives(:,5);
+dtrn_z = derivatives(:,6);
+
+srot_x = squares(:,1);
+srot_y = squares(:,2);
+srot_z = squares(:,3);
+strn_x = squares(:,4);
+strn_y = squares(:,5);
+strn_z = squares(:,6);
+
+sdrot_x = square_derivatives(:,1);
+sdrot_y = square_derivatives(:,2);
+sdrot_z = square_derivatives(:,3);
+sdtrn_x = square_derivatives(:,4);
+sdtrn_y = square_derivatives(:,5);
+sdtrn_z = square_derivatives(:,6);
+
 % create cortical ribbon file; if needed
 if ~exist([Subdir '/func/rois/CorticalRibbon.nii.gz'],'file')
     str = strsplit(Subdir,'/'); Subject = str{end}; % infer subject name
@@ -40,8 +78,9 @@ b = zeros(size(data,1),1);
 for i = 1:length(brain_voxels)
     
     % remove the mean gray matter signal;
-    [betas,~,data(brain_voxels(i),:),~,~] = regress(data(brain_voxels(i),:)',[gs' ones(length(gs),1)]); % could consider adding first-order temporal deriv. 
+    [betas,~,data(brain_voxels(i),:),~,~] = regress(data(brain_voxels(i),:)',[gs' ones(length(gs),1) rot_x rot_y rot_z trn_x trn_y trn_z drot_x drot_y drot_z dtrn_x dtrn_y dtrn_z srot_x srot_y srot_z strn_x strn_y strn_z sdrot_x sdrot_y sdrot_z sdtrn_x sdtrn_y sdtrn_z ]); % could consider adding first-order temporal deriv. 
     b(brain_voxels(i)) = betas(1); % log the gs beta;
+     warning('off','last');
     
 end
 
